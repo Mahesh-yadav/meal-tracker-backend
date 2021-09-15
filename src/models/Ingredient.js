@@ -14,6 +14,15 @@ export default class Ingredient {
     return ingredients;
   }
 
+  static async insertIngredient(ingredient) {
+    const database = db.getDB();
+    const result = await database
+      .collection(Ingredient.collectionName)
+      .insertOne(ingredient);
+
+    return result.insertedId;
+  }
+
   static async deleteIngredient(ingredientId) {
     const database = db.getDB();
     await database.collection(Ingredient.collectionName).deleteOne({

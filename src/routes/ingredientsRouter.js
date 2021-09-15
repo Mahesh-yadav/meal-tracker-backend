@@ -13,6 +13,21 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res, next) => {
+  try {
+    const ingredient = req.body;
+    const insertedId = await Ingredient.insertIngredient(ingredient);
+
+    if (insertedId) {
+      res.status(201).json({ ...ingredient, _id: insertedId });
+    } else {
+      throw new Error('Failed to insert ingredient');
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.delete('/:ingredientId', async (req, res, next) => {
   try {
     const { ingredientId } = req.params;
