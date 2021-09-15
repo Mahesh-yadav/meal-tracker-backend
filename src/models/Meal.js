@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { db } from '../db/connection';
 import Recipe from './Recipe';
 
@@ -26,5 +27,12 @@ export default class Meal {
     });
 
     return populatedMeals;
+  }
+
+  static async deleteMeal(mealId) {
+    const database = db.getDB();
+    await database.collection(Meal.collectionName).deleteOne({
+      _id: ObjectId(mealId),
+    });
   }
 }

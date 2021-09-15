@@ -13,4 +13,15 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.delete('/:mealId', async (req, res, next) => {
+  try {
+    const { mealId } = req.params;
+    await Meal.deleteMeal(mealId);
+
+    res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
