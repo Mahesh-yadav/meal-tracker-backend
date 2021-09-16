@@ -12,4 +12,15 @@ export default class Recipe {
 
     return recipes;
   }
+
+  static async searchRecipes(searchString = '') {
+    const database = db.getDB();
+
+    const recipes = await database
+      .collection(Recipe.collectionName)
+      .find({ $text: { $search: searchString } })
+      .toArray();
+
+    return recipes;
+  }
 }

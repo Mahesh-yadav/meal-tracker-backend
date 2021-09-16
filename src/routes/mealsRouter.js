@@ -13,6 +13,24 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res, next) => {
+  const { date, recipeId } = req.body;
+  const newMeal = {
+    recipeId,
+    planned_date: date,
+  };
+
+  try {
+    const insertedMealId = await Meal.insertMeal(newMeal);
+    res.status(201).json({
+      ...newMeal,
+      _id: insertedMealId,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.delete('/:mealId', async (req, res, next) => {
   try {
     const { mealId } = req.params;

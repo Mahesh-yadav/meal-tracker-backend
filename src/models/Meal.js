@@ -29,6 +29,15 @@ export default class Meal {
     return populatedMeals;
   }
 
+  static async insertMeal(meal) {
+    const database = db.getDB();
+    const result = await database
+      .collection(Meal.collectionName)
+      .insertOne(meal);
+
+    return result.insertedId;
+  }
+
   static async deleteMeal(mealId) {
     const database = db.getDB();
     await database.collection(Meal.collectionName).deleteOne({
